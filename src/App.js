@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Dijkstra from './dijkstra';
-import Prim from './prim';
-import Kruskal from './kruskal';
+//import Dijkstra from './dijkstra';
+//import Prim from './prim';
+//import Kruskal from './kruskal';
 import 'bootstrap/dist/css/bootstrap.css';
 
 export default class App extends Component {
