@@ -22,17 +22,39 @@ export default class App extends Component {
 
   renderDistance(nombre){
     const distances = [];
+    const nodes = [];
     let start = 1;
     const n = parseInt(nombre)
 
-    for(; start <= n; start++){
-      let random = parseInt(Math.random()*( n - 1) + 1);
+    for(; start < n; start++){
+      const distance = parseInt(Math.random()*(900 - 40) + 40);
 
-      if(random !== start){
+      nodes.push([`x${start}`,`x${start+1}`, distance]);
+
         distances.push(
           <div key={start} className="col-2">
+            <span style={{color:'red'}}>{`x${start}-x${start+1}: `}</span>
+            { distance }km
+          </div>
+        )
+    }
+
+    for(start = 1; start <= n; start++){
+      let random = parseInt(Math.random()*( n - 1) + 1);
+      const distance = parseInt(Math.random()*(900 - 40) + 40);
+
+      let isIn = nodes.forEach(node =>{
+        if((node[0] === `x${start}` && node[1] === `x${random}`) || (node[1] === `x${start}` && node[0] === `x${random}`))
+          return true
+      })
+
+      if(random !== start && !isIn){
+        nodes.push([`x${start}`,`x${random}`, distance]);
+
+        distances.push(
+          <div key={start+50} className="col-2">
             <span style={{color:'red'}}>{`x${start}-x${random}: `}</span>
-            { parseInt(Math.random()*(900 - 40) + 40)}km
+            { distance }km
           </div>
         )
       }
