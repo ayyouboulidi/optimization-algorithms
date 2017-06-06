@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
 //import Dijkstra from './dijkstra';
 //import Prim from './prim';
-//import Kruskal from './kruskal';
+import Kruskal from './kruskal';
 import 'bootstrap/dist/css/bootstrap.css';
 
+/** 
+ * @export
+ * @class App
+ * @extends {Component}
+ */
 export default class App extends Component {
 
+  /**
+   * Creates an instance of App.
+   * @param {object} props 
+   * 
+   * @memberof App
+   */
   constructor(props){
     super(props);
 
@@ -14,22 +25,38 @@ export default class App extends Component {
     }
   }
 
+  /**
+   * Handle input change
+   * 
+   * 
+   * @memberof App
+   */
   handleInputChange = event => {
     const value = event.target.value;
 
     this.setState({nombreVille: value});
   }
 
+  /**
+   * generate the distances between cities
+   * 
+   * @param {number} nombre 
+   * @returns {array}
+   * 
+   * @memberof App
+   */
   renderDistance(nombre){
     const distances = [];
-    const nodes = [];
+    this.edges = [];
+    this.nodes = [];
     let start = 1;
-    const n = parseInt(nombre)
+    const n = parseInt(nombre, 10)
 
     for(; start < n; start++){
-      const distance = parseInt(Math.random()*(900 - 40) + 40);
+      const distance = parseInt(Math.random()*(900 - 40) + 40, 10);
 
-      nodes.push([`x${start}`,`x${start+1}`, distance]);
+      this.edges.push([`x${start}`,`x${start+1}`, distance]);
+      this.nodes.push(`x${start}`)
 
         distances.push(
           <div key={start} className="col-2">
@@ -40,16 +67,15 @@ export default class App extends Component {
     }
 
     for(start = 1; start <= n; start++){
-      let random = parseInt(Math.random()*( n - 1) + 1);
-      const distance = parseInt(Math.random()*(900 - 40) + 40);
+      let random = parseInt(Math.random()*( n - 1) + 1, 10);
+      const distance = parseInt(Math.random()*(900 - 40) + 40, 10);
 
-      let isIn = nodes.forEach(node =>{
-        if((node[0] === `x${start}` && node[1] === `x${random}`) || (node[1] === `x${start}` && node[0] === `x${random}`))
-          return true
+      let isIn = this.edges.map(node =>{
+        return (node[0] === `x${start}` && node[1] === `x${random}`) || (node[1] === `x${start}` && node[0] === `x${random}`)
       })
 
-      if(random !== start && !isIn){
-        nodes.push([`x${start}`,`x${random}`, distance]);
+      if(random !== start && !isIn.includes(true)){
+        this.edges.push([`x${start}`,`x${random}`, distance]);
 
         distances.push(
           <div key={start+50} className="col-2">
@@ -60,10 +86,17 @@ export default class App extends Component {
       }
     }
 
+    this.nodes.push(`x${n}`)
     return distances;
   }
 
-
+/**
+ * render function
+ * 
+ * @returns {object}
+ * 
+ * @memberof App
+ */
   render() {
     return (
       <div className="container">
@@ -94,8 +127,8 @@ export default class App extends Component {
           </div>
         </div>
         {/*<Dijkstra EdgesList={[]}/>
-        <Kruskal EdgesList={[]}/>
         <Prim EdgesList={[]}/>*/}
+        <Kruskal edgeList={this.edges} nodeList={this.nodes}/>
       </div>
     );
   }
