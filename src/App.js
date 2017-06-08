@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-//import Dijkstra from './dijkstra';
+import Plusproche from './plusproche';
 //import Prim from './prim';
 import Kruskal from './kruskal';
+import { sortBy } from 'lodash';
 import 'bootstrap/dist/css/bootstrap.css';
 
 /** 
@@ -57,13 +58,6 @@ export default class App extends Component {
 
       this.edges.push([`x${start}`,`x${start+1}`, distance]);
       this.nodes.push(`x${start}`)
-
-        distances.push(
-          <div key={start} className="col-2">
-            <span style={{color:'red'}}>{`x${start}-x${start+1}: `}</span>
-            { distance }km
-          </div>
-        )
     }
 
     for(start = 1; start <= n; start++){
@@ -76,15 +70,19 @@ export default class App extends Component {
 
       if(random !== start && !isIn.includes(true)){
         this.edges.push([`x${start}`,`x${random}`, distance]);
-
-        distances.push(
-          <div key={start+2250} className="col-2">
-            <span style={{color:'red'}}>{`x${start}-x${random}: `}</span>
-            { distance }km
-          </div>
-        )
       }
     }
+
+    let sortedEdges = sortBy(this.edges, edge =>  -edge[2] );
+
+    sortedEdges.forEach((edge, key) => {
+      distances.push(
+        <div key={key} className="col-4">
+          {`${edge[0]}`}<img src="/between.png" style={{width:'12px'}}/>{`${edge[1]}`} : 
+          <span style={{fontSize:'13px' }}>{`${edge[2]}km`}</span>
+        </div>
+      )
+    });
 
     this.nodes.push(`x${n}`)
     return distances;
@@ -100,44 +98,44 @@ export default class App extends Component {
   render() {
     return (
       <div className="container">
-        <div className="row px-0 py-3" style={{backgroundColor: 'gray'}}>
+        <div className="row px-0 py-3" style={{backgroundColor: '#0277bd', color:'#fff'}}>
           <div className="col-4 d-flex justify-content-start"> TIPE OULIDI OMALI Sara</div>
           <div className="col-4 d-flex justify-content-center"> Juin 2017</div>
           <div className="col-4 d-flex justify-content-end"> CPGE Al-Cachy Fès-Maroc</div>
         </div>
-        <div className="row px-0" style={{backgroundColor: 'gray'}}>
+        <div className="row px-0" style={{backgroundColor: '#0168a5', color:'#fff', fontWeight: '700'}}>
           <div className="col-12 d-flex justify-content-center">Impact du hasard et des contraintes sur l'optimalité</div>
         </div>
-        <div className="row px-0" style={{backgroundColor: 'gray'}}>
+        <div className="row px-0" style={{backgroundColor: '#0168a5', color:'#fff', fontWeight: '700'}}>
           <div className="col-12 d-flex justify-content-center">Cas du voyageur de commerce</div>
         </div>
-        <div className="row px-0 py-3" style={{backgroundColor: 'green'}}>
-          <div className="col-6 d-flex justify-content-start"> Le nombre de villes</div>
-        </div>
-        <div className="row pb-2" style={{backgroundColor: 'green'}}>
-          <div className="col-offset-8 col-2 d-flex justify-content-start">
+        <div className="row py-2" style={{backgroundColor: '#f8f8f8'}}>
+          <div className="col-6 d-flex justify-content-start"> 
+            Le nombre de villes 
             <select value={this.state.nombreVille} onChange={this.handleInputChange}>
               <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
               <option value="10">10</option>
-              <option value="20">20</option>
-              <option value="50">50</option>
-              <option value="2250">2250</option>
             </select>
           </div>
         </div>
-        <div className="container-fluid mx-0"  style={{backgroundColor: 'yellow'}}>
-          <div className="row px-0 py-3">
-            <div className="col-6 d-flex justify-content-start"> La distance entre les villes</div>
+        <div className="row component">
+          <div className="col-12 d-flex justify-content-start">
+             La distance entre les villes
           </div>
-          <div className="row d-flex justify-content-start">
             {
               this.renderDistance(this.state.nombreVille)
             }
-          </div>
         </div>
+        <div className="row">
         {/*<Dijkstra EdgesList={[]}/>
         <Prim EdgesList={[]}/>*/}
-        <Kruskal edgeList={this.edges} nodeList={this.nodes}/>
+        
+          <Kruskal edgeList={this.edges} nodeList={this.nodes}/>
+          <Plusproche edgeList={this.edges} nodeList={this.nodes}/>
+          <Kruskal edgeList={this.edges} nodeList={this.nodes}/>
+        </div>
       </div>
     );
   }

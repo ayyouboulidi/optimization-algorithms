@@ -1,5 +1,12 @@
 body {
   margin: 0;
   padding: 0;
+  background-color: #f8f8f8;
   font-family: sans-serif;
+}
+
+.component {
+  background-color: #fff;
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  margin: 1rem 0;
 }

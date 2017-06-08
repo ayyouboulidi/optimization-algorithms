@@ -1,4 +1,44 @@
+/**
+ * plus proche voisin
+ * 
+ * 
+1)start on an arbitrary vertex as current vertex.
+2)find out the shortest edge connecting current vertex and an unvisited vertex V.
+3)set current vertex to V.
+4)mark V as visited.
+5)if all the vertices in domain are visited, then terminate.
+6)Go to step 2.
+ */
+
+import { filter, indexOf, uniq, sortBy } from 'lodash';
+
+export function plusproche (nodes, edges){
+	let visited = [nodes[0]]
+	let i = 0;
+	while(visited.length < nodes.length || i < 9){
+		let visite = visited[visited.length-1];
+		let filtered = filter(edges, (edge) => {
+			return (edge[0] === visite && indexOf(visited,edge[1]) < 0) || (edge[1] === visite && indexOf(visited,edge[0]) < 0 );
+		})
+
+		let sort = sortBy(filtered, filt => filt[2]);
+
+		if(sort.length > 0) visited.push(sort[0][0], sort[0][1]);
+		visited = uniq(visited)
+
+		i++;
+
+	}
+
+	return visited;
+}
+
+
+
+
+
 /*
+DIJSKTRA
 (Données: X, U, I, T, d, s; résultats: Π, A)
  
 0) S :={s}; Π (s) :=0 ; A(s) :=-1; xpivot :=s; Π (x) := + ∞ pour tout x ϵ X, x ≠ s ;
@@ -27,7 +67,7 @@
 			console.log(graph.findShortestPath('c', 'a', 'b'));
 			console.log(graph.findShortestPath('c', 'b', 'a'));
 
-*/
+
 var Graph = (function (undefined) {
 
 	var extractKeys = function (obj) {
@@ -171,4 +211,4 @@ var Graph = (function (undefined) {
 
 	return Graph;
 
-})();
+})();*/

@@ -3,6 +3,17 @@
 2) faire T = T U {xi}, i = i + 1
 3) si i < n alors aller en (1) sinon stop.
 
+Kruskal(G) :
+1   A := ø
+2   pour chaque sommet v de G :
+3      créerEnsemble(v)
+4   trier les arêtes de G par poids croissant
+5   pour chaque arête (u, v) de G prise par poids croissant :
+6      si find(u) ≠ find(v) :
+7         ajouter l'arête (u, v) à l'ensemble A
+8         union(u, v)
+9   retourner A
+
 
 const nodes = ["A", "B", "C", "D", "E", "F", "G"];
     const edges = [
