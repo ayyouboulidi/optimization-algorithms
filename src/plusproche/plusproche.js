@@ -15,8 +15,8 @@ import { filter, indexOf, uniq, sortBy } from 'lodash';
 export function plusproche (nodes, edges){
 	let visited = [nodes[0]]
 	let i = 0;
-	while(visited.length < nodes.length || i < 9){
-		let visite = visited[visited.length-1];
+	//while(visited.length < nodes.length || i < 9){
+		/*let visite = visited[visited.length-1];
 		let filtered = filter(edges, (edge) => {
 			return (edge[0] === visite && indexOf(visited,edge[1]) < 0) || (edge[1] === visite && indexOf(visited,edge[0]) < 0 );
 		})
@@ -24,11 +24,11 @@ export function plusproche (nodes, edges){
 		let sort = sortBy(filtered, filt => filt[2]);
 
 		if(sort.length > 0) visited.push(sort[0][0], sort[0][1]);
-		visited = uniq(visited)
+		visited = uniq(visited)*/
 
-		i++;
+		//i++;
 
-	}
+	//}
 
 	return visited;
 }
