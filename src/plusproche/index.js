@@ -7,15 +7,15 @@ export default class PlusPorcheIndex extends Component{
         let pluspro = plusproche(this.props.nodeList, this.props.edgeList);
         let t1 = performance.now();
         return (
-            <div className="col-4 component">
+            <div className="col-6 component">
                 Plus proche voisin (temps d'execution): {parseFloat(t1-t0).toFixed(2)} ms
                 <hr/>
                 <div className="row">
                 {
                     pluspro.map( (edge, key) => (
                         <div key={key} className="col-6">
-                            <span style={{color:'red'}}>{`${edge}-${edge}: `}</span>
-                            { edge }km
+                            {`${edge}`}<img src="/between.png" style={{width:'12px'}}/>
+                            <span style={{fontSize:'13px' }}>{`${edge}km`}</span>         
                         </div>
                     ))
                 }

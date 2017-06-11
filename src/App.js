@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Plusproche from './plusproche';
-//import Prim from './prim';
-import Kruskal from './kruskal';
+//import Bruteforce from './forcebrute';
 import { sortBy } from 'lodash';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -129,12 +128,9 @@ export default class App extends Component {
             }
         </div>
         <div className="row">
-        {/*<Dijkstra EdgesList={[]}/>
-        <Prim EdgesList={[]}/>*/}
-        
-          <Kruskal edgeList={this.edges} nodeList={this.nodes}/>
+          {/*<Bruteforce edgeList={this.edges} nodeList={this.nodes}/>*/}
           <Plusproche edgeList={this.edges} nodeList={this.nodes}/>
-          <Kruskal edgeList={this.edges} nodeList={this.nodes}/>
+          <Plusproche edgeList={this.edges} nodeList={this.nodes}/>
         </div>
       </div>
     );
