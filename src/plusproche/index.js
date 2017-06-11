@@ -14,8 +14,8 @@ export default class PlusPorcheIndex extends Component{
                 {
                     pluspro.map( (edge, key) => (
                         <div key={key} className="col-6">
-                            {`${edge}`}<img src="/between.png" style={{width:'12px'}}/>
-                            <span style={{fontSize:'13px' }}>{`${edge}km`}</span>         
+                            {`${edge.start}`}<img src="/between.png" style={{width:'12px'}}/>{`${edge.arrive}`}
+                            <span style={{fontSize:'13px' }}>{`${edge.distance}km`}</span>         
                         </div>
                     ))
                 }

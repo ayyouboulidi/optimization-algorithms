@@ -10,10 +10,11 @@
 6)Go to step 2.
  */
 
-import { filter, indexOf, uniq, sortBy } from 'lodash';
+import { filter, indexOf, uniq, sortBy, includes } from 'lodash';
 
 export function plusproche (nodes, edges){
 	let visited = [nodes[0]]
+	let list = [];
 	let i = 0;
 	while(visited.length < nodes.length && i < 10){
 		let actual = visited[visited.length-1];
@@ -23,14 +24,31 @@ export function plusproche (nodes, edges){
 
 		let sort = sortBy(filtered, filt => filt[2]);
 
-		if(sort.length > 0) visited.push(sort[0][0], sort[0][1]);
-		visited = uniq(visited)
+		if(sort.length > 0){
+			visited.push(sort[0][0], sort[0][1]);
+			list.push({start: sort[0][0], arrive: sort[0][1], distance: sort[0][2]})
+		} 
+		visited = uniq(visited);
 
 		i++;
 
 	}
 
-	return visited;
+	let cycle = false;
+
+	for(let j=0;j<list.length;j++){
+		if(list[j].start === `x${nodes.length}` && list[j].arrive === 'x1') cycle=true;
+	}
+
+	if(!cycle ){
+		if(true ||includes(edges, {start: `x${nodes.length}`, arrive: 'x1'}) || includes(edges, {start: 'x1', arrive: `x${nodes.length}`})){
+			list.push({start: `x${nodes.length}`, arrive: 'x1', distance: 'Retour '})
+		} else {
+			list = [{start: '', arrive: '', distance: 'Pas de cycle avec cet Algo'}]
+		}
+	}
+
+	return list;
 }
 
 
