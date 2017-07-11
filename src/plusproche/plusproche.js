@@ -26,7 +26,32 @@ export function plusproche (nodes, edges){
 
 		if(sort.length > 0){
 			visited.push(sort[0][0], sort[0][1]);
-			list.push({start: sort[0][0], arrive: sort[0][1], distance: sort[0][2]})
+			let start = '';
+			let arrive = '';
+			if(list.length > 0 ){
+				start = list[list.length-1].arrive;
+			} else {
+				if (sort[0][0] > sort[0][1] ) {
+					start = sort[0][1]
+				} else {
+					start = sort[0][0]
+				}
+			}
+
+			if(list.length === 0 ) {
+				if (sort[0][0] > sort[0][1] ) {
+					arrive = sort[0][0]
+				} else {
+					arrive = sort[0][1]
+				}
+			} else {
+				if(list[list.length-1].arrive === sort[0][0]){
+					arrive = sort[0][1]
+				} else {
+					arrive = sort[0][0]
+				}
+			}
+			list.push({start, arrive, distance: sort[0][2]})
 		} 
 		visited = uniq(visited);
 
@@ -34,21 +59,39 @@ export function plusproche (nodes, edges){
 
 	}
 
-	let cycle = false;
-
-	for(let j=0;j<list.length;j++){
-		if(list[j].start === `x${nodes.length}` && list[j].arrive === 'x1') cycle=true;
+	const e = exist(edges,'x1',list[list.length-1].arrive);
+	if(e.exist){
+		list.push({start: list[list.length-1].arrive, arrive: 'x1', distance: e.distance})
 	}
 
-	if(!cycle ){
-		if(true ||includes(edges, {start: `x${nodes.length}`, arrive: 'x1'}) || includes(edges, {start: 'x1', arrive: `x${nodes.length}`})){
-			list.push({start: `x${nodes.length}`, arrive: 'x1', distance: 'Retour '})
-		} else {
-			list = [{start: '', arrive: '', distance: 'Pas de cycle avec cet Algo'}]
+	console.log(list, nodes, list.length === nodes.length)
+
+	let cycle = list.length === nodes.length;
+
+
+	// for(let j=0;j<list.length;j++){
+	// 	if(list[j].start === `x${nodes.length}` && list[j].arrive === 'x1') cycle=true;
+	// }
+
+	if(cycle){
+		return list
+	}
+	else {
+		return [{start: '', arrive: '', distance: 'Pas de cycle avec ce cas'}]
+	}
+
+}
+
+function exist(edges, el1, el2) {
+	let exist = {exist:false, distance: 0};
+	for(let i=0; i<edges.length; i++){
+		if(edges[i].indexOf(el1)>=0 && edges[i].indexOf(el2)>=0){
+			exist.exist = true;
+			exist.distance = edges[i][2];
 		}
 	}
 
-	return list;
+	return exist;
 }
 
 

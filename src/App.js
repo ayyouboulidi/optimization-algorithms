@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Plusproche from './plusproche';
-//import Bruteforce from './forcebrute';
+import Bruteforce from './forcebrute';
 import { sortBy } from 'lodash';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -113,9 +113,7 @@ export default class App extends Component {
             Le nombre de villes 
             <select value={this.state.nombreVille} onChange={this.handleInputChange}>
               <option value="3">3</option>
-              <option value="4">4</option>
               <option value="5">5</option>
-              <option value="10">10</option>
             </select>
           </div>
         </div>
@@ -128,8 +126,7 @@ export default class App extends Component {
             }
         </div>
         <div className="row">
-          {/*<Bruteforce edgeList={this.edges} nodeList={this.nodes}/>*/}
-          <Plusproche edgeList={this.edges} nodeList={this.nodes}/>
+          <Bruteforce edgeList={this.edges} nodeList={this.nodes}/>
           <Plusproche edgeList={this.edges} nodeList={this.nodes}/>
         </div>
       </div>

@@ -5,10 +5,12 @@ export default class PlusPorcheIndex extends Component{
     render(){
         let t0 = performance.now();
         let pluspro = plusproche(this.props.nodeList, this.props.edgeList);
+        let total = 0;
+        pluspro.forEach(e=>{total +=e.distance})
         let t1 = performance.now();
         return (
             <div className="col-6 component">
-                Plus proche voisin (temps d'execution): {parseFloat(t1-t0).toFixed(2)} ms
+                Plus proche (temps d'execution): {parseFloat(t1-t0).toFixed(2)} ms
                 <hr/>
                 <div className="row">
                 {
@@ -20,6 +22,12 @@ export default class PlusPorcheIndex extends Component{
                     ))
                 }
                 </div>
+                <hr/>
+                {pluspro.length >1 ?
+                    <div className="row">
+                        Distance: {total} km
+                    </div>:null
+                }
             </div>
         )
     }
